@@ -1,0 +1,24 @@
+version: "3"
+   
+services:
+  ping-service:
+    build:
+      context: ./PingService
+      dockerfile: Dockerfile
+    depends_on:
+      - ReceiverService
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./PingService:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  receiver-service:
+    build:
+      context: ./ReceiverService
+      dockerfile: Dockerfile
+    volumes:
+      - ./ReceiverService:/app
+    environment:
+      - PYTHONUNBUFFERED=1
