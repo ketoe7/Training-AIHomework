@@ -9,11 +9,10 @@ receiver_model = api.model(
 
 @api.route('/api/v1/info')
 class Info(Resource):
-    # @api.marshal_with(receiver_model, code=200)
     def get(self):
-        """Healthcheck for the service."""
+        """Return hardcoded info"""
         return {'Receiver': 'Cisco is the best!'}
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=False, host='0.0.0.0', port=8080)

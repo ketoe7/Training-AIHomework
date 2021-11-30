@@ -5,12 +5,22 @@ from app import app, api
 
 ping_model = api.model(
     'Url',
-    {'url': fields.String('https://receiver-service:8080.com')}
+    {
+        'url': fields.String('https://receiver-service:8080.com')
+    }
+)
+
+health_model = api.model(
+    'Health',
+    {
+        'status': fields.String('healthy')
+    }
 )
 
 
 @api.route('/api/v1/health')
 class Health(Resource):
+
     def get(self):
         """Healthcheck for the service."""
         return {'status': 'healthy'}
@@ -18,6 +28,7 @@ class Health(Resource):
 
 @api.route('/api/v1/ping')
 class Ping(Resource):
+
     @api.expect(ping_model)
     @api.response(200, f'Host is reachable')
     @api.response(400, f'Host is not reachable')
@@ -60,4 +71,4 @@ class Ping(Resource):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=False, host='0.0.0.0', port=8080)
